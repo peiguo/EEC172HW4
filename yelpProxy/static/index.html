@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>InSecure Yelp API Proxy</title>
+</head>
+
+<body>
+   <section>
+      <h1> Introduction </h1>
+      <p> This service serves as a proxy to Yelp's search API. It performs two functions: 
+         <ul>
+            <li> It signs a user's request based on user-provided OAuth2 secrets. 
+            <li> It parses returned JSON response and allows users to retrieve data using <a href="http://goessner.net/articles/JsonPath/">JSONPath</a>
+         </ul>
+         <em>This service is for education purpose only. It is NOT secure. All OAuth2 secrets are transmitted in plain HTTP headers. Use it at your own peril. </em>
+   </section>
+   <section>
+      <h1> Test with cURL </h1>
+      <p> The following example searches "food" in the location "San Francisco", and retrieves the display_phone of the first found business. The json path used is business.[0].display_phone. 
+      The path is specified by the query parameter 'field', and it must be URL encoded. </p>
+      <code>
+         <pre>
+         curl -H 'OAUTH-CONSUMER-KEY: yourKey' \
+              -H 'OAUTH-CONSUMER-SECRET: yourSecret' \
+              -H 'OAUTH-TOKEN: yourToken' \
+              -H 'OAUTH-TOKEN-SECRET: yourTokenSecret' \
+              'http://sparkcore-yelp.appspot.com/v2/search?term=food&amp;location=San+Francisco&amp;limit=1&amp;field=business.%5B0%5D.display_phone'
+         </pre>
+      </code>
+
+      <p> For SparkCore code, make sure you write the following headers when making a request </p>
+      <code>
+         <pre>
+            GET /v2/search?term=food&location=San+Francisco&limit=1 HTTP/1.1
+            Host: sparkcore-yelp.appspot.com:8080
+            Accept: */*
+            OAUTH-CONSUMER-KEY: Your Consumer Key
+            OAUTH-CONSUMER-SECRET: Your Consumer Secret
+            OAUTH-TOKEN: Your Token
+            OAUTH-TOKEN-SECRET: Your Token Secret
+         </pre>
+      </code>
+   </section>
+</body>
+
+</html>

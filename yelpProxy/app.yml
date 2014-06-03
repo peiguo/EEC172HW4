@@ -1,0 +1,15 @@
+application: sparkcore-yelp
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: true
+
+
+handlers:
+- url: /v2/search
+  script: yelpsearch.application
+
+# Site root for documentation
+- url: /
+  static_files: static/index.html
+  upload: static/index.html
